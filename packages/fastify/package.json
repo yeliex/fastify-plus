@@ -1,6 +1,6 @@
 {
   "name": "@yeliex/fastify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a fastify encapsulation",
   "main": "dist/index.js",
   "typings": "src/index.ts",
@@ -36,7 +36,7 @@
     "@sinclair/typebox": "^0.29.4",
     "exception.js": "^3.0.2",
     "fastify": "^4.19.2",
-    "fastify-pino-pretty": "^1.0.0",
+    "fastify-pino-pretty": "^1.0.1",
     "fastify-plugin": "^4.5.0"
   },
   "engines": {

@@ -1,0 +1,19 @@
+{
+    "$schema": "https://turborepo.org/schema.json",
+    "globalDependencies": [
+        "tsconfig.base.json"
+    ],
+    "pipeline": {
+        "clean": {
+            "inputs": ["src/**"]
+        },
+        "build": {
+            "dependsOn": ["clean", "^build"],
+            "outputs": ["dist/**"],
+            "inputs": ["src/**", "tsconfig.json"]
+        },
+        "test": {
+            "inputs": ["src/**", "tsconfig.json"]
+        }
+    }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "@yeliex/fastify",
+  "version": "1.0.0",
+  "description": "a fastify encapsulation",
+  "main": "dist/index.js",
+  "typings": "src/index.ts",
+  "type": "module",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "swc ./src -d ./dist --source-maps -C jsc.target=es2021",
+    "test:type": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yeliex/fastify-plus.git"
+  },
+  "keywords": [
+    "fastify",
+    "fastify-encapsulation"
+  ],
+  "author": "yeliex <yeliex@yeliex.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yeliex/fastify-plus/issues"
+  },
+  "homepage": "https://github.com/yeliex/fastify-plus#readme",
+  "dependencies": {
+    "@fastify/accepts": "^4.2.0",
+    "@fastify/cookie": "^8.3.0",
+    "@fastify/type-provider-typebox": "^3.3.0",
+    "@sinclair/typebox": "^0.29.4",
+    "exception.js": "^3.0.2",
+    "fastify": "^4.19.2",
+    "fastify-pino-pretty": "^1.0.0",
+    "fastify-plugin": "^4.5.0"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

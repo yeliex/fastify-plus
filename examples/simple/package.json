@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "name": "simple-example",
+  "type": "module",
+  "scripts": {
+    "start": "node --no-warnings --loader @swc-node/register/esm src/server.ts"
+  },
+  "dependencies": {
+    "@yeliex/fastify": "*"
+  },
+  "devDependencies": {
+    "@swc-node/register": "^1.6.6"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "fastify-pino-pretty",
+  "version": "1.0.0",
+  "description": "compact fastify pino logger for better development read",
+  "main": "dist/index.js",
+  "typings": "src/index.ts",
+  "type": "commonjs",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "swc ./src -d ./dist --source-maps -C jsc.target=es2021 -C module.type=commonjs",
+    "test:type": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yeliex/fastify-plus.git"
+  },
+  "keywords": [
+    "pino",
+    "pretty",
+    "fastify",
+    "logger",
+    "compact"
+  ],
+  "author": "yeliex <yeliex@yeliex.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yeliex/fastify-plus/issues"
+  },
+  "homepage": "https://github.com/yeliex/fastify-plus#readme",
+  "dependencies": {
+    "pino": "^8.8.0",
+    "pino-pretty": "^10.1.0"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

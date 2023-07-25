@@ -1,0 +1,14 @@
+{
+  "extends": ["@tsconfig/strictest/tsconfig.json", "@tsconfig/node16/tsconfig.json"],
+  "compileOnSave": false,
+  "compilerOptions": {
+    "noEmit": true,
+    "isolatedModules": true,
+    "importsNotUsedAsValues": "error",
+    "esModuleInterop": true,
+    "verbatimModuleSyntax": true,
+    "useDefineForClassFields": true,
+    "noPropertyAccessFromIndexSignature": false
+  },
+  "include": [],
+}

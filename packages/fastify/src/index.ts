@@ -84,3 +84,5 @@ const createServer = (options: CreateServer = {}) => {
 };
 
 export default createServer;
+
+export * from './libs/logger.js';

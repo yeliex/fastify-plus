@@ -6,11 +6,6 @@ import { EOL } from 'os';
 const messageFormat: PinoPretty.MessageFormatFunc = (log, messageKey) => {
     const messages = [];
 
-    if(log.topic) {
-        messages.push(gray(`[${log.topic}]`));
-        delete log.topic;
-    }
-
     if (!log.reqId) {
         messages.unshift(log[messageKey] as string);
     } else {
@@ -59,6 +54,11 @@ const messageFormat: PinoPretty.MessageFormatFunc = (log, messageKey) => {
     if (log.err) {
         (log.err as any).stack && messages.push(EOL + gray((log.err as any).stack.toString()) + EOL);
         delete log.err;
+    }
+
+    if(log.topic) {
+        messages.push(gray(`[${log.topic}]`));
+        delete log.topic;
     }
 
     return messages.join(' ');

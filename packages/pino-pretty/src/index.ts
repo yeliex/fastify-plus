@@ -4,51 +4,56 @@ import { gray } from 'colorette';
 import { EOL } from 'os';
 
 const messageFormat: PinoPretty.MessageFormatFunc = (log, messageKey) => {
-    if (!log.reqId) {
-        return log[messageKey] as string;
-    }
-
     const messages = [];
 
-    if (log.reqId) {
-        messages.unshift(`[${log.reqId}]`);
-        delete log.reqId;
+    if(log.topic) {
+        messages.push(gray(`[${log.topic}]`));
+        delete log.topic;
     }
 
-    let msg = log[messageKey];
-
-    if (msg === 'incoming request') {
-        msg = '→';
-        messages.unshift(msg);
-    } else if (msg === 'request completed') {
-        msg = '←';
-        messages.unshift(msg);
+    if (!log.reqId) {
+        messages.unshift(log[messageKey] as string);
     } else {
-        messages.push(msg);
-    }
-
-    if (log.req) {
-        const { req } = log as any;
-
-        messages.push(
-            req.method,
-            req.url,
-        );
-
-        delete log.req;
-    }
-
-    if (log.res) {
-        const { res } = log as any;
-
-        messages.push(`${res.statusCode}`);
-
-        if (log.responseTime) {
-            messages.push(`(${Number(log.responseTime).toFixed(3)}ms)`);
-            delete log.responseTime;
+        if (log.reqId) {
+            messages.unshift(`[${log.reqId}]`);
+            delete log.reqId;
         }
 
-        delete log.res;
+        let msg = log[messageKey];
+
+        if (msg === 'incoming request') {
+            msg = '→';
+            messages.unshift(msg);
+        } else if (msg === 'request completed') {
+            msg = '←';
+            messages.unshift(msg);
+        } else {
+            messages.push(msg);
+        }
+
+        if (log.req) {
+            const { req } = log as any;
+
+            messages.push(
+                req.method,
+                req.url,
+            );
+
+            delete log.req;
+        }
+
+        if (log.res) {
+            const { res } = log as any;
+
+            messages.push(`${res.statusCode}`);
+
+            if (log.responseTime) {
+                messages.push(`(${Number(log.responseTime).toFixed(3)}ms)`);
+                delete log.responseTime;
+            }
+
+            delete log.res;
+        }
     }
 
     if (log.err) {
@@ -62,7 +67,7 @@ const messageFormat: PinoPretty.MessageFormatFunc = (log, messageKey) => {
 const build = (options: PinoPretty.PrettyOptions) => {
     return pretty({
         messageFormat,
-        ignore: 'pid,hostname',
+        ignore: 'pid,hostname,topic',
         ...options,
     });
 };

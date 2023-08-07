@@ -31,11 +31,11 @@
   "homepage": "https://github.com/yeliex/fastify-plus#readme",
   "dependencies": {
     "@fastify/accepts": "^4.2.0",
-    "@fastify/cookie": "^8.3.0",
-    "@fastify/type-provider-typebox": "^3.3.0",
-    "@sinclair/typebox": "^0.29.4",
+    "@fastify/cookie": "^9.0.4",
+    "@fastify/type-provider-typebox": "^3.4.0",
+    "@sinclair/typebox": "^0.30.4",
     "exception.js": "^3.0.2",
-    "fastify": "^4.19.2",
+    "fastify": "^4.21.0",
     "fastify-pino-pretty": "^1.0.1",
     "fastify-plugin": "^4.5.0"
   },

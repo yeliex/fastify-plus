@@ -1,5 +1,11 @@
 # fastify-pino-pretty
 
+## 1.1.2
+
+### Patch Changes
+
+- 2941723: feat: update topic logger format
+
 ## 1.1.1
 
 ### Patch Changes

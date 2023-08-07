@@ -1,5 +1,13 @@
 # @yeliex/fastify
 
+## 1.1.2
+
+### Patch Changes
+
+- 2941723: feat: update topic logger format
+- Updated dependencies [2941723]
+  - fastify-pino-pretty@1.1.2
+
 ## 1.1.1
 
 ### Patch Changes

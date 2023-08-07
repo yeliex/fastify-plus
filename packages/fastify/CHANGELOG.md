@@ -1,5 +1,13 @@
 # @yeliex/fastify
 
+## 1.1.3
+
+### Patch Changes
+
+- b6d4471: fix logger format
+- Updated dependencies [b6d4471]
+  - fastify-pino-pretty@1.1.3
+
 ## 1.1.2
 
 ### Patch Changes

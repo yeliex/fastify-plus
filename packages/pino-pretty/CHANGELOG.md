@@ -1,5 +1,11 @@
 # fastify-pino-pretty
 
+## 1.1.3
+
+### Patch Changes
+
+- b6d4471: fix logger format
+
 ## 1.1.2
 
 ### Patch Changes

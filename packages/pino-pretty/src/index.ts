@@ -7,7 +7,7 @@ const messageFormat: PinoPretty.MessageFormatFunc = (log, messageKey) => {
     const messages = [];
 
     if (!log.reqId) {
-        messages.unshift(log[messageKey] as string);
+        messages.push(log[messageKey] as string);
     } else {
         if (log.reqId) {
             messages.unshift(`[${log.reqId}]`);
@@ -57,7 +57,7 @@ const messageFormat: PinoPretty.MessageFormatFunc = (log, messageKey) => {
     }
 
     if(log.topic) {
-        messages.push(gray(`[${log.topic}]`));
+        messages.unshift(gray(`[${log.topic}]`));
         delete log.topic;
     }
 

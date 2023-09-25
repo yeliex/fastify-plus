@@ -1,5 +1,11 @@
 # @yeliex/fastify
 
+## 1.2.0
+
+### Minor Changes
+
+- 8196582: move router plugin after all other plugins
+
 ## 1.1.3
 
 ### Patch Changes

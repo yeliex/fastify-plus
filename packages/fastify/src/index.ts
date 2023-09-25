@@ -1,4 +1,5 @@
 import { fastify } from 'fastify';
+import type { PinoLoggerOptions } from 'fastify/types/logger.js';
 import { createWriteStream, mkdirSync } from 'fs';
 import { resolve } from 'path';
 import { writeFile } from 'fs/promises';
@@ -38,7 +39,7 @@ const createServer = (options: CreateServer = {}) => {
     const PID_FILE = resolve(runtimeDir, 'pid');
 
     const app = fastify({
-        logger: LOGGER_CONFIG,
+        logger: LOGGER_CONFIG as PinoLoggerOptions,
         requestIdHeader: 'x-request-id',
     }).withTypeProvider<TypeBoxTypeProvider>();
 
@@ -53,7 +54,6 @@ const createServer = (options: CreateServer = {}) => {
     app.register(fastifyAccepts);
     app.register(fastifyCookie);
     app.register(SerializeResponsePlugin);
-    app.register(RouterRegisterPlugin, { dir: resolve(app.baseDir, 'routes') });
 
     app.addHook('onSend', async (request, reply) => {
         reply.header('x-request-id', request.id);
@@ -79,6 +79,15 @@ const createServer = (options: CreateServer = {}) => {
 
         await writeFile(PID_FILE, `${process.pid}`);
     });
+
+    const listen = app.listen;
+
+    app.listen = (async (...args: any[]) => {
+        await app.after();
+        app.register(RouterRegisterPlugin, { dir: resolve(app.baseDir, 'routes') });
+
+        return listen.call(app, ...args as [any, any, any]);
+    }) as any;
 
     return app;
 };

@@ -1,11 +1,11 @@
+import glob from 'fast-glob';
 import type { FastifyPluginAsync } from 'fastify';
-import { readdir } from 'fs/promises';
 import plugin from 'fastify-plugin';
-import { resolve, extname } from 'path';
+import { resolve } from 'path';
 import * as process from 'process';
 import { fileURLToPath } from 'url';
 
-const AVAILABLE_EXT = process.env.NODE_ENV === 'production' ? ['.js', '.mjs'] : ['.ts'];
+const AVAILABLE_EXT = process.env.NODE_ENV === 'production' ? ['js', 'mjs'] : ['ts'];
 
 const FRAMEWORK_BASE = fileURLToPath(new URL('../../', import.meta.url));
 
@@ -16,17 +16,19 @@ const RouterLoaderPlugin: FastifyPluginAsync<{
     const { dir = resolve(fastify.baseDir, 'routes'), ext = AVAILABLE_EXT } = opts;
 
     const load = async (BASE: string, exts: string[]) => {
-        fastify.log.info('register routes from %s', BASE);
+        const globExts = exts.map(ext => ext.replace(/^\.?/, ''));
+        const pattern = globExts.length > 1 ? `**/*.{${globExts.join(',')}}` : `**/*.${globExts}`;
 
-        const files = await readdir(BASE);
+        fastify.log.info(`register routes from ${BASE}, pattern ${pattern}`);
+
+        const files = await glob(pattern, {
+            ignore: ['*.d.ts'],
+            dot: false,
+            cwd: BASE,
+            throwErrorOnBrokenSymbolicLink: true,
+        });
 
         for (const file of files) {
-            const ext = extname(file);
-
-            if (!exts.includes(ext) || ext === '.d.ts') {
-                continue;
-            }
-
             fastify.log.info('register route %s', file);
 
             const route = await import(resolve(BASE, file));

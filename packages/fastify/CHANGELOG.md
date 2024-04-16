@@ -1,5 +1,16 @@
 # @yeliex/fastify
 
+## 1.3.0
+
+### Minor Changes
+
+- 59022e0: feat: router register supports dir
+
+### Patch Changes
+
+- Updated dependencies [59022e0]
+  - fastify-pino-pretty@1.2.0
+
 ## 1.2.0
 
 ### Minor Changes

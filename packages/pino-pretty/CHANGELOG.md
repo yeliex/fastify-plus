@@ -1,5 +1,11 @@
 # fastify-pino-pretty
 
+## 1.2.0
+
+### Minor Changes
+
+- 59022e0: feat: router register supports dir
+
 ## 1.1.3
 
 ### Patch Changes

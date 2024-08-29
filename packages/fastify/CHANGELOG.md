@@ -1,5 +1,13 @@
 # @yeliex/fastify
 
+## 1.4.1
+
+### Patch Changes
+
+- 58bced3: chore: make pino as peer
+- Updated dependencies [58bced3]
+  - fastify-pino-pretty@1.3.0
+
 ## 1.4.0
 
 ### Minor Changes

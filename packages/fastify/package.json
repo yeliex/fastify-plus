@@ -1,6 +1,6 @@
 {
   "name": "@yeliex/fastify",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "a fastify encapsulation",
   "main": "dist/index.js",
   "typings": "src/index.ts",
@@ -34,7 +34,7 @@
     "@fastify/cookie": "^9.3.1",
     "exception.js": "^3.0.2",
     "fast-glob": "^3.3.2",
-    "fastify-pino-pretty": "^1.2.0",
+    "fastify-pino-pretty": "^1.3.0",
     "fastify-plugin": "^4.5.0",
     "lodash.defaults": "^4.2.0"
   },

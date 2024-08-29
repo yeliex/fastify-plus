@@ -1,5 +1,11 @@
 # fastify-pino-pretty
 
+## 1.3.0
+
+### Minor Changes
+
+- 58bced3: chore: make pino as peer
+
 ## 1.2.0
 
 ### Minor Changes

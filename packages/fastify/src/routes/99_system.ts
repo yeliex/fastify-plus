@@ -1,4 +1,4 @@
-import { FastifyPluginAsync } from 'fastify';
+import type { FastifyPluginAsync } from 'fastify';
 import * as process from 'process';
 
 const SystemModule: FastifyPluginAsync = async (fastify) => {

@@ -10,7 +10,7 @@ import { resolve } from 'path';
 import SerializeResponsePlugin from './plugins/response/index.js';
 import RouterRegisterPlugin from './plugins/router/index.js';
 
-export const DEFAULT_LOGGER_CONFIG: PinoLoggerOptions = process.env.NODE_ENV === 'production' ? {} : {
+export const DEFAULT_LOGGER_CONFIG = process.env.NODE_ENV === 'production' ? {} : {
     transport: {
         target: 'fastify-pino-pretty',
     },

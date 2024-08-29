@@ -1,5 +1,5 @@
-import { type FastifyPluginAsync } from 'fastify';
-import { type RegisterOptions } from 'fastify/types/register.js';
+import type { FastifyPluginAsync } from 'fastify';
+import type { RegisterOptions } from 'fastify/types/register.js';
 
 const HealthModule: FastifyPluginAsync = async (fastify) => {
     fastify.all('/health', async (_, reply) => {

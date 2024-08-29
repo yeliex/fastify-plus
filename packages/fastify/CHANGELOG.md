@@ -1,5 +1,11 @@
 # @yeliex/fastify
 
+## 1.3.1
+
+### Patch Changes
+
+- 282caa0: chore: make fastify and typebox peer
+
 ## 1.3.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @yeliex/fastify
 
+## 1.4.0
+
+### Minor Changes
+
+- cbce7c8: feat: support more config
+
 ## 1.3.1
 
 ### Patch Changes

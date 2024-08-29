@@ -35,7 +35,8 @@
     "exception.js": "^3.0.2",
     "fast-glob": "^3.3.2",
     "fastify-pino-pretty": "^1.2.0",
-    "fastify-plugin": "^4.5.0"
+    "fastify-plugin": "^4.5.0",
+    "lodash.defaults": "^4.2.0"
   },
   "peerDependencies": {
     "@fastify/type-provider-typebox": "*",

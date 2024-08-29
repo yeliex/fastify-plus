@@ -1,19 +1,28 @@
-import { fastify } from 'fastify';
-import type { PinoLoggerOptions } from 'fastify/types/logger.js';
-import { createWriteStream, mkdirSync } from 'fs';
-import { resolve } from 'path';
-import { writeFile } from 'fs/promises';
 import fastifyAccepts from '@fastify/accepts';
 import fastifyCookie from '@fastify/cookie';
-import RouterRegisterPlugin from './plugins/router/index.js';
-import SerializeResponsePlugin from './plugins/response/index.js';
-import { LOGGER_CONFIG } from './libs/logger.js';
 import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
+import { fastify, type FastifyServerOptions } from 'fastify';
+import type { PinoLoggerOptions } from 'fastify/types/logger.js';
+import { createWriteStream, mkdirSync } from 'fs';
+import { writeFile } from 'fs/promises';
+import defaults from 'lodash.defaults';
+import { resolve } from 'path';
+import SerializeResponsePlugin from './plugins/response/index.js';
+import RouterRegisterPlugin from './plugins/router/index.js';
 
-interface CreateServer {
+export const DEFAULT_LOGGER_CONFIG: PinoLoggerOptions = process.env.NODE_ENV === 'production' ? {} : {
+    transport: {
+        target: 'fastify-pino-pretty',
+    },
+};
+
+export const DEFAULT_REQUEST_ID_HEADER = 'x-request-id';
+
+interface CreateServer extends FastifyServerOptions {
     baseDir?: string;
     workDir?: string;
     runtimeDir?: string;
+    logger?: PinoLoggerOptions;
 }
 
 declare module 'fastify' {
@@ -26,11 +35,17 @@ declare module 'fastify' {
 
 const CWD = process.cwd();
 
+export const DEFAULT_OPTIONS: FastifyServerOptions = {
+    logger: DEFAULT_LOGGER_CONFIG,
+    requestIdHeader: DEFAULT_REQUEST_ID_HEADER,
+};
+
 const createServer = (options: CreateServer = {}) => {
     const {
         baseDir = CWD,
         workDir = CWD,
         runtimeDir = resolve(workDir, '.run'),
+        ...extraOptions
     } = options;
 
     mkdirSync(runtimeDir, { recursive: true });
@@ -38,10 +53,9 @@ const createServer = (options: CreateServer = {}) => {
     const RUNTIME_FILE = resolve(runtimeDir, 'runtime');
     const PID_FILE = resolve(runtimeDir, 'pid');
 
-    const app = fastify({
-        logger: LOGGER_CONFIG as PinoLoggerOptions,
-        requestIdHeader: 'x-request-id',
-    }).withTypeProvider<TypeBoxTypeProvider>();
+    const app = fastify(defaults(
+        {}, extraOptions, DEFAULT_OPTIONS,
+    )).withTypeProvider<TypeBoxTypeProvider>();
 
     app.baseDir = baseDir;
     app.runtimeDir = runtimeDir;
@@ -93,5 +107,3 @@ const createServer = (options: CreateServer = {}) => {
 };
 
 export default createServer;
-
-export * from './libs/logger.js';

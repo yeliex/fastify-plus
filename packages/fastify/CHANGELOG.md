@@ -1,5 +1,11 @@
 # @yeliex/fastify
 
+## 1.5.0
+
+### Minor Changes
+
+- 9a30c8e: feat: export error handler
+
 ## 1.4.1
 
 ### Patch Changes

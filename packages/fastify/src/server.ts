@@ -7,16 +7,8 @@ import { createWriteStream, mkdirSync } from 'fs';
 import { writeFile } from 'fs/promises';
 import defaults from 'lodash.defaults';
 import { resolve } from 'path';
-import SerializeResponsePlugin from './plugins/response/index.js';
+import { DEFAULT_LOGGER_CONFIG, DEFAULT_REQUEST_ID_HEADER } from './libs/util.js';
 import RouterRegisterPlugin from './plugins/router/index.js';
-
-export const DEFAULT_LOGGER_CONFIG = process.env.NODE_ENV === 'production' ? {} : {
-    transport: {
-        target: 'fastify-pino-pretty',
-    },
-};
-
-export const DEFAULT_REQUEST_ID_HEADER = 'x-request-id';
 
 interface CreateServer extends FastifyServerOptions {
     baseDir?: string;
@@ -67,7 +59,6 @@ const createServer = (options: CreateServer = {}) => {
 
     app.register(fastifyAccepts);
     app.register(fastifyCookie);
-    app.register(SerializeResponsePlugin);
 
     app.addHook('onSend', async (request, reply) => {
         reply.header('x-request-id', request.id);

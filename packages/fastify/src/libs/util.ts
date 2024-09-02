@@ -1,12 +1,20 @@
-import type { FastifyError, FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
-import plugin from 'fastify-plugin';
+import type { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 import { Stream } from 'stream';
+
+export const DEFAULT_LOGGER_CONFIG = process.env.NODE_ENV === 'production' ? {} : {
+    transport: {
+        target: 'fastify-pino-pretty',
+    },
+};
+
+export const DEFAULT_REQUEST_ID_HEADER = 'x-request-id';
+
 
 const ERROR_AS_STATUS = [
     401,
 ];
 
-export const replySerializer = (payload: unknown, statusCode: number) => {
+export const defaultReplySerializer = (payload: unknown, statusCode: number) => {
     if (typeof payload === 'string' || payload instanceof Buffer || payload instanceof Stream) {
         return payload as string;
     }
@@ -24,7 +32,7 @@ export const replySerializer = (payload: unknown, statusCode: number) => {
     });
 };
 
-export const notFoundHandler = (_request: FastifyRequest, reply: FastifyReply) => {
+export const defaultNotFoundHandler = (_request: FastifyRequest, reply: FastifyReply) => {
     reply.statusCode = 404;
     reply.send({
         code: 404,
@@ -33,7 +41,7 @@ export const notFoundHandler = (_request: FastifyRequest, reply: FastifyReply) =
     });
 };
 
-export const errorHandler = (error: FastifyError, request: FastifyRequest, reply: FastifyReply) => {
+export const defaultErrorHandler = (error: FastifyError, request: FastifyRequest, reply: FastifyReply) => {
     let code = error.statusCode;
     let subcode = 0;
 
@@ -62,13 +70,3 @@ export const errorHandler = (error: FastifyError, request: FastifyRequest, reply
         stack: process.env.NODE_ENV !== 'production' ? error.stack : undefined,
     }));
 };
-
-const SerializeResponsePlugin: FastifyPluginAsync = async (instance) => {
-    instance.setReplySerializer(replySerializer);
-
-    instance.setNotFoundHandler(notFoundHandler);
-
-    instance.setErrorHandler(errorHandler);
-};
-
-export default plugin(SerializeResponsePlugin);

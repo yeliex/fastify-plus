@@ -1,5 +1,11 @@
 # @yeliex/fastify
 
+## 1.6.0
+
+### Minor Changes
+
+- 9311114: feat: remove default serializer to optional
+
 ## 1.5.1
 
 ### Patch Changes

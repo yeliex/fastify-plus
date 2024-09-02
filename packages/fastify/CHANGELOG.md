@@ -1,5 +1,11 @@
 # @yeliex/fastify
 
+## 1.5.1
+
+### Patch Changes
+
+- 94c3856: fix: fix export
+
 ## 1.5.0
 
 ### Minor Changes

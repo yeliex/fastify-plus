@@ -1,5 +1,12 @@
 # @yeliex/fastify
 
+## 1.7.0
+
+### Minor Changes
+
+- 17b8c71: feat: add ResponsePlugin and reply.json method
+- 17b8c71: feat: add ResponsePlugin and reply.json method
+
 ## 1.6.0
 
 ### Minor Changes

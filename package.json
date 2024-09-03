@@ -2,6 +2,7 @@
   "name": "fastify-plus",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "description": "fastify packages for self encapsulation",
   "workspaces": [
     "packages/*"

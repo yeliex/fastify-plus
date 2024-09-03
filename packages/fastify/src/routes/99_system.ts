@@ -30,10 +30,11 @@ const SystemModule: FastifyPluginAsync = async (fastify) => {
         reply.callNotFound();
     });
 
-    fastify.get('/bad_request', () => {
+    fastify.get('/bad_request', (_,reply) => {
         const error = new Error('bad request') as any;
         error.code = 400;
-        throw error;
+        reply.status(400);
+        reply.send(error);
     });
 
     fastify.get('/buffer', () => {
@@ -41,11 +42,15 @@ const SystemModule: FastifyPluginAsync = async (fastify) => {
     });
 
     fastify.get('/empty', async (_, reply) => {
-        reply.send(undefined);
+        reply.code(204);
     });
 
     fastify.get('/test', async () => {
         return 'string';
+    });
+
+    fastify.get('/string', async (_,reply) => {
+        reply.json('string');
     });
 
     fastify.get('/number', async () => {

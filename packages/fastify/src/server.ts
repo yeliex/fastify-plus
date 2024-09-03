@@ -8,6 +8,7 @@ import { writeFile } from 'fs/promises';
 import defaults from 'lodash.defaults';
 import { resolve } from 'path';
 import { DEFAULT_LOGGER_CONFIG, DEFAULT_REQUEST_ID_HEADER } from './libs/util.js';
+import ResponsePlugin from './plugins/response/index.js';
 import RouterRegisterPlugin from './plugins/router/index.js';
 
 interface CreateServer extends FastifyServerOptions {
@@ -59,6 +60,7 @@ const createServer = (options: CreateServer = {}) => {
 
     app.register(fastifyAccepts);
     app.register(fastifyCookie);
+    app.register(ResponsePlugin);
 
     app.addHook('onSend', async (request, reply) => {
         reply.header('x-request-id', request.id);

@@ -1,4 +1,4 @@
-import createServer, {defaultErrorHandler, defaultNotFoundHandler, defaultReplySerializer} from '@yeliex/fastify';
+import createServer, { defaultErrorHandler, defaultNotFoundHandler, defaultReplySerializer } from '@yeliex/fastify';
 import { fileURLToPath } from 'url';
 
 const BASE_DIR = fileURLToPath(new URL('.', import.meta.url));

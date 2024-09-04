@@ -3,7 +3,7 @@ import pretty from 'pino-pretty';
 import { gray } from 'colorette';
 import { EOL } from 'os';
 
-const messageFormat: PinoPretty.MessageFormatFunc = (log, messageKey) => {
+export const messageFormat: PinoPretty.MessageFormatFunc = (log, messageKey) => {
     const messages = [];
 
     if (!log.reqId) {

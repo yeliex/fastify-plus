@@ -1,5 +1,11 @@
 # fastify-pino-pretty
 
+## 1.4.0
+
+### Minor Changes
+
+- d8fa6c0: feat: update pretty package
+
 ## 1.3.1
 
 ### Patch Changes

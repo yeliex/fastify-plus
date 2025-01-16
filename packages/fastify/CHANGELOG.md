@@ -1,5 +1,11 @@
 # @yeliex/fastify
 
+## 1.7.1
+
+### Patch Changes
+
+- f62a76b: fix: invalid json response serialize detect
+
 ## 1.7.0
 
 ### Minor Changes

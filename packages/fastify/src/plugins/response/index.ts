@@ -24,11 +24,6 @@ const ResponsePlugin: FastifyPluginAsync = async (fastify) => {
 
         reply.type('application/json; charset=utf-8');
 
-
-        if (payload && typeof payload === 'object' && 'toString' in payload) {
-            payload = (payload as Buffer).toString('utf-8');
-        }
-
         reply.send(serializeReply(payload, code));
     });
 };

@@ -1,0 +1,9 @@
+{
+  "compileOnSave": false,
+  "include": [],
+  "references": [
+    {"path": "packages/fastify/tsconfig.json"},
+    {"path": "packages/pino-pretty/tsconfig.json"},
+    {"path": "examples/tsconfig.json"}
+  ]
+}

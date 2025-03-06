@@ -14,6 +14,7 @@ const SystemRouter: FastifyPluginAsync = async (fastify) => {
 
     fastify.get('/print', async (_, reply) => {
         reply.send(`
+        version: ${fastify.version}
         ======PLUGINS======
         ${fastify.printPlugins()}
 
@@ -30,7 +31,7 @@ const SystemRouter: FastifyPluginAsync = async (fastify) => {
         reply.callNotFound();
     });
 
-    fastify.get('/bad_request', (_,reply) => {
+    fastify.get('/bad_request', (_, reply) => {
         const error = new Error('bad request') as any;
         error.code = 400;
         reply.status(400);
@@ -41,24 +42,45 @@ const SystemRouter: FastifyPluginAsync = async (fastify) => {
         return Buffer.from('123');
     });
 
+    fastify.get('/buffer/json', (_,reply) => {
+        return reply.json(Buffer.from('123'));
+    });
+
     fastify.get('/empty', async (_, reply) => {
         reply.code(204);
     });
 
-    fastify.get('/test', async () => {
+    fastify.get('/string', async () => {
         return 'string';
     });
 
-    fastify.get('/string', async (_,reply) => {
-        reply.json('string');
+    fastify.get('/string/json', async (_, reply) => {
+        return reply.json('string');
     });
+
 
     fastify.get('/number', async () => {
         return 123456789;
     });
 
+    fastify.get('/number/json', async (_, reply) => {
+        return reply.json(123456789);
+    });
+
     fastify.get('/boolean', async () => {
         return false;
+    });
+
+    fastify.get('/boolean/json', async (_, reply) => {
+        return reply.json(false);
+    });
+
+    fastify.get('/null', async () => {
+        return null;
+    });
+
+    fastify.get('/null/json', async (_, reply) => {
+        reply.json(null);
     });
 };
 

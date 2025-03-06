@@ -1,9 +1,9 @@
-import type { PinoPretty } from 'pino-pretty';
-import pretty from 'pino-pretty';
 import { gray } from 'colorette';
 import { EOL } from 'os';
+import type { LogDescriptor } from 'pino';
+import pretty, { type PrettyOptions } from 'pino-pretty';
 
-export const messageFormat: PinoPretty.MessageFormatFunc = (log, messageKey) => {
+export const messageFormat = (log: LogDescriptor, messageKey: string) => {
     const messages = [];
 
     if (!log.reqId) {
@@ -56,7 +56,7 @@ export const messageFormat: PinoPretty.MessageFormatFunc = (log, messageKey) => 
         delete log.err;
     }
 
-    if(log.topic) {
+    if (log.topic) {
         messages.unshift(gray(`[${log.topic}]`));
         delete log.topic;
     }
@@ -64,7 +64,7 @@ export const messageFormat: PinoPretty.MessageFormatFunc = (log, messageKey) => 
     return messages.join(' ');
 };
 
-const build = (options: PinoPretty.PrettyOptions) => {
+const build = (options: PrettyOptions) => {
     return pretty({
         messageFormat,
         ignore: 'pid,hostname,topic',

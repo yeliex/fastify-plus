@@ -1,5 +1,16 @@
 # @yeliex/fastify
 
+## 4.0.0
+
+### Major Changes
+
+- 3555ad2: chore: update package to align version with fastify
+
+### Patch Changes
+
+- Updated dependencies [3555ad2]
+  - fastify-pino-pretty@4.0.0
+
 ## 1.7.1
 
 ### Patch Changes

@@ -2,10 +2,8 @@
   "extends": ["@tsconfig/strictest", "@tsconfig/node16"],
   "compileOnSave": false,
   "compilerOptions": {
-    "noEmit": true,
     "verbatimModuleSyntax": true,
     "useDefineForClassFields": true,
-    "allowImportingTsExtensions": true,
     "noPropertyAccessFromIndexSignature": false,
     "exactOptionalPropertyTypes": false
   },

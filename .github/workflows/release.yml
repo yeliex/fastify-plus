@@ -49,6 +49,7 @@ jobs:
                 with:
                     title: Version Packages for ${{ github.ref_name }}
                     publish: pnpm publish --recursive
+                    createGithubReleases: true
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

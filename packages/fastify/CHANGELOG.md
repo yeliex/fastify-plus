@@ -1,6 +1,6 @@
 # @yeliex/fastify
 
-## 2.0.0
+## 4.0.0
 
 ### Major Changes
 
@@ -9,7 +9,7 @@
 ### Patch Changes
 
 - Updated dependencies [3f739c9]
-  - fastify-pino-pretty@2.0.0
+  - fastify-pino-pretty@4.0.0
 
 ## 1.7.1
 

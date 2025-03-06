@@ -2,12 +2,15 @@ import glob from 'fast-glob';
 import type { FastifyPluginAsync } from 'fastify';
 import plugin from 'fastify-plugin';
 import { resolve } from 'path';
-import * as process from 'process';
-import { fileURLToPath } from 'url';
 
-const AVAILABLE_EXT = process.env.NODE_ENV === 'production' ? ['js', 'mjs'] : ['ts'];
+const internalRoutes = [
+    () => import('../../routes/0_health.ts'),
+    () => import('../../routes/99_system.ts'),
+];
 
-const FRAMEWORK_BASE = fileURLToPath(new URL('../../', import.meta.url));
+const AVAILABLE_EXT = process.env.NODE_ENV === 'production'
+    ? ['cjs', 'mjs', 'js']
+    : ['mts', 'cts', 'ts'];
 
 const RouterLoaderPlugin: FastifyPluginAsync<{
     dir?: string;
@@ -31,7 +34,7 @@ const RouterLoaderPlugin: FastifyPluginAsync<{
         for (const file of files) {
             fastify.log.info('register route %s', file);
 
-            const route = await import(resolve(BASE, file));
+            const route = await import(`${resolve(BASE, file)}`);
 
             fastify.register(route.default, {
                 ...(route.options || {}),
@@ -40,7 +43,16 @@ const RouterLoaderPlugin: FastifyPluginAsync<{
         }
     };
 
-    await load(resolve(FRAMEWORK_BASE, 'routes'), ['.js']);
+    for (const loadInternalRoute of internalRoutes) {
+        const route: any = await loadInternalRoute();
+
+        fastify.log.info('register internal route %s', route.default.name);
+        fastify.register(route.default, {
+            ...(route.options || {}),
+            prefix: route.prefix,
+        });
+    }
+
     await load(dir, ext);
 };
 

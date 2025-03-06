@@ -1,17 +1,26 @@
 import fastifyAccepts from '@fastify/accepts';
 import fastifyCookie from '@fastify/cookie';
-import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
-import { fastify, type FastifyServerOptions } from 'fastify';
+import fastify, { type FastifyInstance } from 'fastify';
 import type { PinoLoggerOptions } from 'fastify/types/logger.js';
 import { createWriteStream, mkdirSync } from 'fs';
 import { writeFile } from 'fs/promises';
 import defaults from 'lodash.defaults';
+import type http from 'node:http';
+import type http2 from 'node:http2';
+import type https from 'node:https';
 import { resolve } from 'path';
 import { DEFAULT_LOGGER_CONFIG, DEFAULT_REQUEST_ID_HEADER } from './libs/util.js';
 import ResponsePlugin from './plugins/response/index.js';
 import RouterRegisterPlugin from './plugins/router/index.js';
 
-interface CreateServer extends FastifyServerOptions {
+const CWD = process.cwd();
+
+export const DEFAULT_OPTIONS = {
+    logger: DEFAULT_LOGGER_CONFIG,
+    requestIdHeader: DEFAULT_REQUEST_ID_HEADER,
+} satisfies fastify.FastifyServerOptions;
+
+interface CreateServerBaseOptions {
     baseDir?: string;
     workDir?: string;
     runtimeDir?: string;
@@ -26,14 +35,49 @@ declare module 'fastify' {
     }
 }
 
-const CWD = process.cwd();
+export type CreateServerHttpOptions<Server extends http.Server, Logger extends fastify.FastifyBaseLogger = fastify.FastifyBaseLogger> =
+    fastify.FastifyHttpOptions<Server, Logger> & CreateServerBaseOptions;
 
-export const DEFAULT_OPTIONS: FastifyServerOptions = {
-    logger: DEFAULT_LOGGER_CONFIG,
-    requestIdHeader: DEFAULT_REQUEST_ID_HEADER,
-};
+export type CreateServerHttpsOptions<Server extends https.Server, Logger extends fastify.FastifyBaseLogger = fastify.FastifyBaseLogger> =
+    fastify.FastifyHttpsOptions<Server, Logger> & CreateServerBaseOptions;
 
-const createServer = (options: CreateServer = {}) => {
+export type CreateServerHttp2Options<Server extends http2.Http2Server, Logger extends fastify.FastifyBaseLogger = fastify.FastifyBaseLogger> =
+    fastify.FastifyHttp2Options<Server, Logger> & CreateServerBaseOptions;
+
+export type CreateServerHttp2SecureOptions<Server extends http2.Http2SecureServer, Logger extends fastify.FastifyBaseLogger = fastify.FastifyBaseLogger> =
+    fastify.FastifyHttp2SecureOptions<Server, Logger> & CreateServerBaseOptions;
+
+function createServer<
+    Server extends http.Server,
+    Request extends fastify.RawRequestDefaultExpression<Server> = fastify.RawRequestDefaultExpression<Server>,
+    Response extends fastify.RawReplyDefaultExpression<Server> = fastify.RawReplyDefaultExpression<Server>,
+    Logger extends fastify.FastifyBaseLogger = fastify.FastifyBaseLogger,
+    TypeProvider extends fastify.FastifyTypeProvider = fastify.FastifyTypeProviderDefault,
+>(options?: CreateServerHttpOptions<Server, Logger>): fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider> & PromiseLike<FastifyInstance<Server, Request, Response, Logger, TypeProvider>>;
+function createServer<
+    Server extends https.Server,
+    Request extends fastify.RawRequestDefaultExpression<Server> = fastify.RawRequestDefaultExpression<Server>,
+    Response extends fastify.RawReplyDefaultExpression<Server> = fastify.RawReplyDefaultExpression<Server>,
+    Logger extends fastify.FastifyBaseLogger = fastify.FastifyBaseLogger,
+    TypeProvider extends fastify.FastifyTypeProvider = fastify.FastifyTypeProviderDefault,
+>(options?: CreateServerHttpsOptions<Server, Logger>): fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider> & PromiseLike<FastifyInstance<Server, Request, Response, Logger, TypeProvider>>;
+
+function createServer<
+    Server extends http2.Http2Server,
+    Request extends fastify.RawRequestDefaultExpression<Server> = fastify.RawRequestDefaultExpression<Server>,
+    Response extends fastify.RawReplyDefaultExpression<Server> = fastify.RawReplyDefaultExpression<Server>,
+    Logger extends fastify.FastifyBaseLogger = fastify.FastifyBaseLogger,
+    TypeProvider extends fastify.FastifyTypeProvider = fastify.FastifyTypeProviderDefault,
+>(options?: CreateServerHttp2Options<Server, Logger>): fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider> & PromiseLike<FastifyInstance<Server, Request, Response, Logger, TypeProvider>>;
+
+function createServer<
+    Server extends http2.Http2SecureServer,
+    Request extends fastify.RawRequestDefaultExpression<Server> = fastify.RawRequestDefaultExpression<Server>,
+    Response extends fastify.RawReplyDefaultExpression<Server> = fastify.RawReplyDefaultExpression<Server>,
+    Logger extends fastify.FastifyBaseLogger = fastify.FastifyBaseLogger,
+    TypeProvider extends fastify.FastifyTypeProvider = fastify.FastifyTypeProviderDefault,
+>(options?: CreateServerHttp2SecureOptions<Server, Logger>): fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider> & PromiseLike<FastifyInstance<Server, Request, Response, Logger, TypeProvider>>;
+function createServer(options: CreateServerBaseOptions = {}): FastifyInstance & PromiseLike<FastifyInstance> {
     const {
         baseDir = CWD,
         workDir = CWD,
@@ -48,7 +92,7 @@ const createServer = (options: CreateServer = {}) => {
 
     const app = fastify(defaults(
         {}, extraOptions, DEFAULT_OPTIONS,
-    )).withTypeProvider<TypeBoxTypeProvider>();
+    ));
 
     app.baseDir = baseDir;
     app.runtimeDir = runtimeDir;
@@ -97,6 +141,6 @@ const createServer = (options: CreateServer = {}) => {
     }) as any;
 
     return app;
-};
+}
 
 export default createServer;

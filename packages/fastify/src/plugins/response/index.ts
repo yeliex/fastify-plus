@@ -6,12 +6,12 @@ import { serializeReply } from '../../libs/util.js';
 
 declare module 'fastify' {
     interface FastifyReply {
-        json(payload: unknown, code?: number): void;
+        json<T extends {}>(payload: T, code?: number): void;
     }
 }
 
 const ResponsePlugin: FastifyPluginAsync = async (fastify) => {
-    fastify.decorateReply('json', async function (payload: unknown, code = 200) {
+    fastify.decorateReply('json', async function (payload: {}, code = 200) {
         const reply = this;
 
         if (payload instanceof Stream

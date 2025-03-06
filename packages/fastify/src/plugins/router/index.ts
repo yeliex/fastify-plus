@@ -4,8 +4,8 @@ import plugin from 'fastify-plugin';
 import { resolve } from 'path';
 
 const internalRoutes = [
-    () => import('../../routes/0_health.ts'),
-    () => import('../../routes/99_system.ts'),
+    () => import('../../routes/0_health.js'),
+    () => import('../../routes/99_system.js'),
 ];
 
 const AVAILABLE_EXT = process.env.NODE_ENV === 'production'

@@ -1,5 +1,4 @@
 import type { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
-import isPlainObject from 'lodash.isplainobject';
 import { ReadableStream } from 'node:stream/web';
 import { isAnyArrayBuffer, isTypedArray } from 'node:util/types';
 import { Stream } from 'stream';
@@ -12,34 +11,47 @@ export const DEFAULT_LOGGER_CONFIG = process.env.NODE_ENV === 'production' ? {} 
 
 export const DEFAULT_REQUEST_ID_HEADER = 'x-request-id';
 
-
 const ERROR_AS_STATUS = [
     401,
 ];
 
-export const defaultNotFoundHandler = (_request: FastifyRequest, reply: FastifyReply) => {
-    reply.statusCode = 404;
-    reply.send({
-        code: 404,
-        message: 'not found',
-        error: 'NotFound',
-    });
-};
-
 export const errorToResponse = (error: Error | FastifyError) => {
-    const code = 'statusCode' in error ? error.statusCode : 500;
+    let statusCode = 500;
+    const body = {
+        code: 500,
+        error: {
+            code: undefined as string | undefined | number,
+            name: error.name,
+            message: error.message,
+            stack: process.env.NODE_ENV !== 'production' ? error.stack : undefined,
+        },
+    };
+
+    if ('statusCode' in error) {
+        statusCode = error.statusCode || 500;
+        body.code = statusCode;
+        body.error.code = error.code;
+    } else {
+        const { code = 500, subcode } = error as any as {
+            code?: number,
+            subcode?: number | string
+        };
+        if (isNaN(Number(code)) || code < 100 || code > 599) {
+            statusCode = 500;
+            if (!subcode) {
+                body.code = code;
+            } else {
+                body.error.code = subcode;
+            }
+        } else {
+            statusCode = code;
+            body.error.code = subcode;
+        }
+    }
 
     return [
-        code && ERROR_AS_STATUS.includes(code) ? code : 200,
-        {
-            code,
-            error: {
-                code: 'code' in error ? error.code : undefined,
-                name: error.name,
-                message: error.message,
-                stack: process.env.NODE_ENV !== 'production' ? error.stack : undefined,
-            },
-        },
+        ERROR_AS_STATUS.includes(statusCode) ? statusCode as number : 200,
+        body,
     ] as const;
 };
 
@@ -50,31 +62,44 @@ export const defaultErrorHandler = (error: FastifyError, request: FastifyRequest
 
     reply.statusCode === 200 && statusCode !== reply.statusCode && reply.code(statusCode);
 
-    reply.send(errorBody);
+    reply.type('application/json').send(errorBody);
+};
+
+export const isInvalidJsonPayload = (payload: unknown) => {
+    if (typeof payload !== 'object' || payload === null) {
+        return undefined;
+    }
+
+    if (Buffer.isBuffer(payload)) {
+        return 'Buffer';
+    }
+
+    if (payload instanceof Stream) {
+        return 'Stream';
+    }
+
+    if (payload instanceof ReadableStream) {
+        return 'ReadableStream';
+    }
+
+    if (payload instanceof Response) {
+        return 'Response';
+    }
+
+    if (isTypedArray(payload)) {
+        return 'TypedArray';
+    }
+
+    if (isAnyArrayBuffer(payload)) {
+        return 'ArrayBuffer';
+    }
+
+    return undefined;
 };
 
 export const serializeReply = (payload: unknown, statusCode: number) => {
-    if (Buffer.isBuffer(payload)
-        || payload instanceof Stream
-        || payload instanceof ReadableStream
-        || payload instanceof Response
-        || isTypedArray(payload)
-        || isAnyArrayBuffer(payload)
-    ) {
-        // todo: update type
-        return payload as any as string;
-    }
-
     if (payload instanceof Error) {
         return JSON.stringify(errorToResponse(payload)[1]);
-    }
-
-    if (
-        // has explicit set status code
-        statusCode !== 200 ||
-        (isPlainObject(payload) && 'code' in (payload as {}))
-    ) {
-        return JSON.stringify(payload);
     }
 
     return JSON.stringify({
@@ -83,7 +108,20 @@ export const serializeReply = (payload: unknown, statusCode: number) => {
     });
 };
 
-export const defaultReplySerializer = (payload: unknown, statusCode: number) => {
-    return serializeReply(payload, statusCode);
-};
+export const defaultNotFoundHandler = (request: FastifyRequest, reply: FastifyReply) => {
+    const accept = request.accepts();
+    const { url, method } = request.raw;
+    const message = `Route ${method}:${url} not found`;
 
+    if (accept.type(['json', 'text', 'html']) === 'json') {
+        reply.status(404).send(errorToResponse({
+            statusCode: 404,
+            name: 'NotFoundError',
+            message,
+        })[1]);
+    } else if (accept.type(['text', 'html']) === 'html') {
+        reply.status(404).type('html').send(`<h1>Not Found</h1>\n<p>${message}</p>`);
+    } else {
+        reply.status(404).send(`Not Found\n${message}`);
+    }
+};

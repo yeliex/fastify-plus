@@ -1,5 +1,11 @@
 # fastify-pino-pretty
 
+## 2.0.0
+
+### Major Changes
+
+- 3f739c9: chore: update package to align version with fastify
+
 ## 1.4.0
 
 ### Minor Changes

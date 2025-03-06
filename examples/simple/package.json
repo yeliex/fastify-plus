@@ -3,11 +3,11 @@
   "name": "simple-example",
   "type": "module",
   "scripts": {
-    "start": "tsx src/server.ts"
+    "start": "tsx watch src/server.ts"
   },
   "dependencies": {
-    "@fastify/type-provider-typebox": "^4.1.0",
-    "@sinclair/typebox": "^0.33.22",
+    "@fastify/type-provider-typebox": "^5.1.0",
+    "@sinclair/typebox": "^0.34.28",
     "@yeliex/fastify": "workspace:*",
     "fastify": "catalog:"
   }

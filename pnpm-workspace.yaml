@@ -3,4 +3,4 @@ packages:
     - examples/*
 
 catalog:
-    fastify: ^4.29.0
+    fastify: ^5.2.1

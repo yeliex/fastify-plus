@@ -1,14 +1,12 @@
 {
+  "extends": ["../tsconfig.base.json"],
   "compilerOptions": {
-    "composite": true,
+    "noEmit": true,
     "baseUrl": "./",
     "paths": {
       "@yeliex/fastify": ["../packages/fastify/src/index.ts"],
       "fastify-pino-pretty": ["../packages/pino-pretty/src/index.ts"]
     }
   },
-  "include": [],
-  "references": [
-    {"path": "./simple/tsconfig.json"}
-  ]
+  "include": []
 }

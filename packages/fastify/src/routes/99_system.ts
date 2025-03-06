@@ -1,7 +1,7 @@
 import type { FastifyPluginAsync } from 'fastify';
 import * as process from 'process';
 
-const SystemModule: FastifyPluginAsync = async (fastify) => {
+const SystemRouter: FastifyPluginAsync = async (fastify) => {
     if (process.env.NODE_ENV === 'production') {
         return;
     }
@@ -64,4 +64,4 @@ const SystemModule: FastifyPluginAsync = async (fastify) => {
 
 export const prefix = '/_';
 
-export default SystemModule;
+export default SystemRouter;

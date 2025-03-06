@@ -3,12 +3,12 @@
   "name": "simple-example",
   "type": "module",
   "scripts": {
-    "start": "node --no-warnings --loader @swc-node/register/esm src/server.ts"
+    "start": "tsx src/server.ts"
   },
   "dependencies": {
-    "@yeliex/fastify": "*"
-  },
-  "devDependencies": {
-    "@swc-node/register": "^1.6.6"
+    "@fastify/type-provider-typebox": "^4.1.0",
+    "@sinclair/typebox": "^0.33.22",
+    "@yeliex/fastify": "workspace:*",
+    "fastify": "catalog:"
   }
 }

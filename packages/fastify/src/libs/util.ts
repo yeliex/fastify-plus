@@ -1,4 +1,5 @@
 import type { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
+import isPlainObject from 'lodash.isplainobject';
 import { ReadableStream } from 'node:stream/web';
 import { isAnyArrayBuffer, isTypedArray } from 'node:util/types';
 import { Stream } from 'stream';
@@ -29,7 +30,7 @@ export const errorToResponse = (error: Error | FastifyError) => {
     const code = 'statusCode' in error ? error.statusCode : 500;
 
     return [
-        ERROR_AS_STATUS.includes(code) ? code : 200,
+        code && ERROR_AS_STATUS.includes(code) ? code : 200,
         {
             code,
             error: {
@@ -60,6 +61,7 @@ export const serializeReply = (payload: unknown, statusCode: number) => {
         || isTypedArray(payload)
         || isAnyArrayBuffer(payload)
     ) {
+        // todo: update type
         return payload as any as string;
     }
 
@@ -68,8 +70,9 @@ export const serializeReply = (payload: unknown, statusCode: number) => {
     }
 
     if (
+        // has explicit set status code
         statusCode !== 200 ||
-        (payload && typeof payload === 'object' && 'code' in payload)
+        (isPlainObject(payload) && 'code' in (payload as {}))
     ) {
         return JSON.stringify(payload);
     }

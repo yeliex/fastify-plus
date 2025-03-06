@@ -6,7 +6,7 @@
   "description": "fastify packages for self encapsulation",
   "scripts": {
     "clean": "pnpm recursive run clean",
-    "test": "tsc --build --verbose --noEmit",
+    "test": "tsc --build --verbose",
     "prepare": "husky"
   },
   "keywords": [

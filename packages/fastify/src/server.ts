@@ -9,7 +9,12 @@ import type http from 'node:http';
 import type http2 from 'node:http2';
 import type https from 'node:https';
 import { resolve } from 'path';
-import { DEFAULT_LOGGER_CONFIG, DEFAULT_REQUEST_ID_HEADER } from './libs/util.js';
+import {
+    DEFAULT_LOGGER_CONFIG,
+    DEFAULT_REQUEST_ID_HEADER,
+    defaultErrorHandler,
+    defaultNotFoundHandler,
+} from './libs/util.js';
 import ResponsePlugin from './plugins/response/index.js';
 import RouterRegisterPlugin from './plugins/router/index.js';
 
@@ -24,6 +29,9 @@ interface CreateServerBaseOptions {
     baseDir?: string;
     workDir?: string;
     runtimeDir?: string;
+    defaultReplySerializer?: Parameters<fastify.FastifyInstance['setReplySerializer']>[0];
+    defaultErrorHandler?: boolean | Parameters<fastify.FastifyInstance['setErrorHandler']>[0];
+    defaultNotFoundHandler?: boolean | Parameters<fastify.FastifyInstance['setNotFoundHandler']>[0];
     logger?: PinoLoggerOptions;
 }
 
@@ -82,6 +90,9 @@ function createServer(options: CreateServerBaseOptions = {}): FastifyInstance & 
         baseDir = CWD,
         workDir = CWD,
         runtimeDir = resolve(workDir, '.run'),
+        defaultErrorHandler: setDefaultErrorHandler = true,
+        defaultNotFoundHandler: setDefaultNotFoundHandler = true,
+        defaultReplySerializer: setDefaultReplySerializer,
         ...extraOptions
     } = options;
 
@@ -101,6 +112,18 @@ function createServer(options: CreateServerBaseOptions = {}): FastifyInstance & 
     app.log.info('baseDir: %s', app.baseDir);
     app.log.info('workDir: %s', app.workDir);
     app.log.info('runtimeDir: %s', app.runtimeDir);
+
+    setDefaultErrorHandler && app.setErrorHandler(
+        typeof setDefaultErrorHandler === 'function'
+            ? setDefaultErrorHandler
+            : defaultErrorHandler,
+    );
+    setDefaultNotFoundHandler && app.setNotFoundHandler(
+        typeof setDefaultNotFoundHandler === 'function'
+            ? setDefaultNotFoundHandler
+            : defaultNotFoundHandler,
+    );
+    setDefaultReplySerializer && app.setReplySerializer(setDefaultReplySerializer);
 
     app.register(fastifyAccepts);
     app.register(fastifyCookie);
@@ -137,7 +160,7 @@ function createServer(options: CreateServerBaseOptions = {}): FastifyInstance & 
         await app.after();
         app.register(RouterRegisterPlugin, { dir: resolve(app.baseDir, 'routes') });
 
-        return listen.call(app, ...args as [any, any, any]);
+        return (listen as any).call(app, ...args);
     }) as any;
 
     return app;

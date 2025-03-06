@@ -1,14 +1,8 @@
 name: Release
 
 on:
-    workflow_run:
-        workflows:
-            - Test
-        types:
-            - completed
-        branches:
-            - master
-            - v4
+    workflow_dispatch:
+    workflow_call:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -24,6 +18,8 @@ jobs:
         steps:
             -   name: Checkout Repo
                 uses: actions/checkout@v4
+                with:
+                    ref: ${{ github.ref }}
 
             -   name: Setup Node.js
                 uses: actions/setup-node@v4

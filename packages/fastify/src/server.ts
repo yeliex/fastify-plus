@@ -33,6 +33,7 @@ interface CreateServerBaseOptions {
     defaultErrorHandler?: boolean | Parameters<fastify.FastifyInstance['setErrorHandler']>[0];
     defaultNotFoundHandler?: boolean | Parameters<fastify.FastifyInstance['setNotFoundHandler']>[0];
     logger?: PinoLoggerOptions;
+    autoRegisterRoutes?: boolean | 'internal';
 }
 
 declare module 'fastify' {
@@ -93,6 +94,7 @@ function createServer(options: CreateServerBaseOptions = {}): fastify.FastifyIns
         defaultErrorHandler: setDefaultErrorHandler = true,
         defaultNotFoundHandler: setDefaultNotFoundHandler = true,
         defaultReplySerializer: setDefaultReplySerializer,
+        autoRegisterRoutes = true,
         ...extraOptions
     } = options;
 
@@ -158,7 +160,7 @@ function createServer(options: CreateServerBaseOptions = {}): fastify.FastifyIns
 
     app.listen = (async (...args: any[]) => {
         await app.after();
-        app.register(RouterRegisterPlugin, { dir: resolve(app.baseDir, 'routes') });
+        app.register(RouterRegisterPlugin, { dir: resolve(app.baseDir, 'routes'), autoRegisterRoutes });
 
         return (listen as any).call(app, ...args);
     }) as any;

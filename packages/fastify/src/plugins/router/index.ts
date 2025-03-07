@@ -14,9 +14,24 @@ const AVAILABLE_EXT = process.env.NODE_ENV === 'production'
 
 const RouterLoaderPlugin: FastifyPluginAsync<{
     dir?: string;
-    ext?: string[]
+    ext?: string[];
+    autoRegisterRoutes?: boolean | 'internal';
 }> = async (fastify, opts = {}) => {
-    const { dir = resolve(fastify.baseDir, 'routes'), ext = AVAILABLE_EXT } = opts;
+    const { dir = resolve(fastify.baseDir, 'routes'), ext = AVAILABLE_EXT, autoRegisterRoutes = true } = opts;
+
+    if (!autoRegisterRoutes) {
+        return;
+    }
+
+    for (const loadInternalRoute of internalRoutes) {
+        const route: any = await loadInternalRoute();
+
+        fastify.log.info('register internal route %s', route.default.name);
+        fastify.register(route.default, {
+            ...(route.options || {}),
+            prefix: route.prefix,
+        });
+    }
 
     const load = async (BASE: string, exts: string[]) => {
         const globExts = exts.map(ext => ext.replace(/^\.?/, ''));
@@ -43,17 +58,7 @@ const RouterLoaderPlugin: FastifyPluginAsync<{
         }
     };
 
-    for (const loadInternalRoute of internalRoutes) {
-        const route: any = await loadInternalRoute();
-
-        fastify.log.info('register internal route %s', route.default.name);
-        fastify.register(route.default, {
-            ...(route.options || {}),
-            prefix: route.prefix,
-        });
-    }
-
-    await load(dir, ext);
+    autoRegisterRoutes !== 'internal' && await load(dir, ext);
 };
 
 export default plugin(RouterLoaderPlugin);

@@ -45,6 +45,6 @@ jobs:
                 with:
                     title: Version Packages for ${{ github.ref_name }}
                     publish: pnpm release
-                    createGithubReleases: true
+                    createGithubReleases: ${{ github.ref_name == 'master' }}
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

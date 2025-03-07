@@ -1,5 +1,11 @@
 # @yeliex/fastify
 
+## 4.1.0
+
+### Minor Changes
+
+- 9bc13d9: feat: optional register routes
+
 ## 4.0.3
 
 ### Patch Changes

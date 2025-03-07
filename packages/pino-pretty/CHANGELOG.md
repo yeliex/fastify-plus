@@ -1,5 +1,12 @@
 # fastify-pino-pretty
 
+## 4.0.1
+
+### Patch Changes
+
+- 2e87b64: feat: optimize response
+- ae39b54: feat: optimize response
+
 ## 4.0.0
 
 ### Major Changes

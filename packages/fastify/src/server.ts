@@ -1,6 +1,6 @@
 import fastifyAccepts from '@fastify/accepts';
 import fastifyCookie from '@fastify/cookie';
-import fastify, { type FastifyInstance } from 'fastify';
+import * as fastify from 'fastify';
 import type { PinoLoggerOptions } from 'fastify/types/logger.js';
 import { createWriteStream, mkdirSync } from 'fs';
 import { writeFile } from 'fs/promises';
@@ -61,14 +61,14 @@ function createServer<
     Response extends fastify.RawReplyDefaultExpression<Server> = fastify.RawReplyDefaultExpression<Server>,
     Logger extends fastify.FastifyBaseLogger = fastify.FastifyBaseLogger,
     TypeProvider extends fastify.FastifyTypeProvider = fastify.FastifyTypeProviderDefault,
->(options?: CreateServerHttpOptions<Server, Logger>): fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider> & PromiseLike<FastifyInstance<Server, Request, Response, Logger, TypeProvider>>;
+>(options?: CreateServerHttpOptions<Server, Logger>): fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider> & PromiseLike<fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider>>;
 function createServer<
     Server extends https.Server,
     Request extends fastify.RawRequestDefaultExpression<Server> = fastify.RawRequestDefaultExpression<Server>,
     Response extends fastify.RawReplyDefaultExpression<Server> = fastify.RawReplyDefaultExpression<Server>,
     Logger extends fastify.FastifyBaseLogger = fastify.FastifyBaseLogger,
     TypeProvider extends fastify.FastifyTypeProvider = fastify.FastifyTypeProviderDefault,
->(options?: CreateServerHttpsOptions<Server, Logger>): fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider> & PromiseLike<FastifyInstance<Server, Request, Response, Logger, TypeProvider>>;
+>(options?: CreateServerHttpsOptions<Server, Logger>): fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider> & PromiseLike<fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider>>;
 
 function createServer<
     Server extends http2.Http2Server,
@@ -76,7 +76,7 @@ function createServer<
     Response extends fastify.RawReplyDefaultExpression<Server> = fastify.RawReplyDefaultExpression<Server>,
     Logger extends fastify.FastifyBaseLogger = fastify.FastifyBaseLogger,
     TypeProvider extends fastify.FastifyTypeProvider = fastify.FastifyTypeProviderDefault,
->(options?: CreateServerHttp2Options<Server, Logger>): fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider> & PromiseLike<FastifyInstance<Server, Request, Response, Logger, TypeProvider>>;
+>(options?: CreateServerHttp2Options<Server, Logger>): fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider> & PromiseLike<fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider>>;
 
 function createServer<
     Server extends http2.Http2SecureServer,
@@ -84,8 +84,8 @@ function createServer<
     Response extends fastify.RawReplyDefaultExpression<Server> = fastify.RawReplyDefaultExpression<Server>,
     Logger extends fastify.FastifyBaseLogger = fastify.FastifyBaseLogger,
     TypeProvider extends fastify.FastifyTypeProvider = fastify.FastifyTypeProviderDefault,
->(options?: CreateServerHttp2SecureOptions<Server, Logger>): fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider> & PromiseLike<FastifyInstance<Server, Request, Response, Logger, TypeProvider>>;
-function createServer(options: CreateServerBaseOptions = {}): FastifyInstance & PromiseLike<FastifyInstance> {
+>(options?: CreateServerHttp2SecureOptions<Server, Logger>): fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider> & PromiseLike<fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider>>;
+function createServer(options: CreateServerBaseOptions = {}): fastify.FastifyInstance & PromiseLike<fastify.FastifyInstance> {
     const {
         baseDir = CWD,
         workDir = CWD,
@@ -101,7 +101,7 @@ function createServer(options: CreateServerBaseOptions = {}): FastifyInstance & 
     const RUNTIME_FILE = resolve(runtimeDir, 'runtime');
     const PID_FILE = resolve(runtimeDir, 'pid');
 
-    const app = fastify(defaults(
+    const app = fastify.fastify(defaults(
         {}, extraOptions, DEFAULT_OPTIONS,
     ));
 

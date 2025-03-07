@@ -1,5 +1,13 @@
 # @yeliex/fastify
 
+## 5.0.1
+
+### Patch Changes
+
+- b67e8b7: fix: fastify type
+- Updated dependencies [b67e8b7]
+  - fastify-pino-pretty@5.0.1
+
 ## 5.0.0
 
 ### Major Changes

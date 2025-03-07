@@ -1,5 +1,11 @@
 # fastify-pino-pretty
 
+## 5.0.1
+
+### Patch Changes
+
+- b67e8b7: fix: fastify type
+
 ## 5.0.0
 
 ### Major Changes

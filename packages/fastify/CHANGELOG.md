@@ -1,5 +1,11 @@
 # @yeliex/fastify
 
+## 5.1.0
+
+### Minor Changes
+
+- c75651c: feat: optional register routes
+
 ## 5.0.2
 
 ### Patch Changes

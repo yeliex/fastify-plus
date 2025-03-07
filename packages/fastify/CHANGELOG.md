@@ -1,5 +1,13 @@
 # @yeliex/fastify
 
+## 4.0.2
+
+### Patch Changes
+
+- 1229fa2: fix: fastify type
+- Updated dependencies [1229fa2]
+  - fastify-pino-pretty@4.0.2
+
 ## 4.0.1
 
 ### Patch Changes

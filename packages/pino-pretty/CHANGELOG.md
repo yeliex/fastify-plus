@@ -1,5 +1,11 @@
 # fastify-pino-pretty
 
+## 4.0.2
+
+### Patch Changes
+
+- 1229fa2: fix: fastify type
+
 ## 4.0.1
 
 ### Patch Changes

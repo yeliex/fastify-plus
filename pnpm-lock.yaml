@@ -17,24 +17,12 @@ importers:
       '@changesets/cli':
         specifier: ^2.28.1
         version: 2.28.1
-      '@fastify/type-provider-typebox':
-        specifier: ^4.1.0
-        version: 4.1.0(@sinclair/typebox@0.33.22)
-      '@sinclair/typebox':
-        specifier: ^0.33.7
-        version: 0.33.22
       '@tsconfig/node16':
         specifier: ^16.1.3
         version: 16.1.3
       '@tsconfig/strictest':
         specifier: ^2.0.5
         version: 2.0.5
-      '@types/lodash.defaults':
-        specifier: ^4.2.0
-        version: 4.2.9
-      '@types/lodash.isplainobject':
-        specifier: ^4.0.9
-        version: 4.0.9
       '@types/node':
         specifier: ^20.17.23
         version: 20.17.23
@@ -98,6 +86,13 @@ importers:
       lodash.isplainobject:
         specifier: ^4.0.6
         version: 4.0.6
+    devDependencies:
+      '@types/lodash.defaults':
+        specifier: ^4.2.0
+        version: 4.2.9
+      '@types/lodash.isplainobject':
+        specifier: ^4.0.9
+        version: 4.0.9
 
   packages/pino-pretty:
     dependencies:

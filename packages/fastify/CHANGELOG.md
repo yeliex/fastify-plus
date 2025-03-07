@@ -1,5 +1,13 @@
 # @yeliex/fastify
 
+## 4.0.1
+
+### Patch Changes
+
+- 316b9a8: feat: optimize response
+- Updated dependencies [316b9a8]
+  - fastify-pino-pretty@4.0.1
+
 ## 4.0.0
 
 ### Major Changes

@@ -1,5 +1,13 @@
 # @yeliex/fastify
 
+## 4.0.2
+
+### Patch Changes
+
+- 0a0d0ff: chore: update scripts
+- Updated dependencies [0a0d0ff]
+  - fastify-pino-pretty@4.0.2
+
 ## 4.0.1
 
 ### Patch Changes

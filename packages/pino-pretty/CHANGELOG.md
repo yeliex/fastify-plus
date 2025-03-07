@@ -1,5 +1,11 @@
 # fastify-pino-pretty
 
+## 4.0.2
+
+### Patch Changes
+
+- 0a0d0ff: chore: update scripts
+
 ## 4.0.1
 
 ### Patch Changes

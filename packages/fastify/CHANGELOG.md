@@ -1,5 +1,11 @@
 # @yeliex/fastify
 
+## 5.0.2
+
+### Patch Changes
+
+- b0f724a: chore: fix type devDeps
+
 ## 5.0.1
 
 ### Patch Changes

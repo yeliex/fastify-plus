@@ -1,5 +1,11 @@
 # @yeliex/fastify
 
+## 4.0.3
+
+### Patch Changes
+
+- d138e7f: chore: fix type devDeps
+
 ## 4.0.2
 
 ### Patch Changes

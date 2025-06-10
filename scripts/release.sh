@@ -6,7 +6,7 @@ pnpm changeset tag
 
 npm_tag='';
 branch_name=$(git symbolic-ref --short -q HEAD);
-if [ $branch_name != 'master' ]; then
+if [ $branch_name == 'master' ]; then
     npm_tag="latest"
 else
     if [[ $branch_name =~ ^v[0-9]+$ ]]; then

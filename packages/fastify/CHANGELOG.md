@@ -1,5 +1,12 @@
 # @yeliex/fastify
 
+## 5.1.1
+
+### Patch Changes
+
+- Updated dependencies [e5fefeb]
+  - fastify-pino-pretty@5.1.0
+
 ## 5.1.0
 
 ### Minor Changes

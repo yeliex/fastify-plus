@@ -1,5 +1,11 @@
 # fastify-pino-pretty
 
+## 5.1.0
+
+### Minor Changes
+
+- e5fefeb: feat: support print topic,type,name
+
 ## 5.0.1
 
 ### Patch Changes

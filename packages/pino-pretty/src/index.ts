@@ -56,9 +56,23 @@ export const messageFormat = (log: LogDescriptor, messageKey: string) => {
         delete log.err;
     }
 
+    const tags: string[] = [];
+
     if (log.topic) {
-        messages.unshift(gray(`[${log.topic}]`));
+        tags.push(gray(`[topic=${log.topic}]`));
         delete log.topic;
+    }
+    if (log.type) {
+        tags.push(gray(`[type=${log.type}]`));
+        delete log.type;
+    }
+    if (log.name) {
+        tags.push(gray(`[name=${log.name}]`));
+        delete log.name;
+    }
+
+    if (tags.length) {
+        messages.unshift(tags.join(''));
     }
 
     return messages.join(' ');

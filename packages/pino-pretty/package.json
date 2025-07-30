@@ -1,6 +1,6 @@
 {
   "name": "fastify-pino-pretty",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "description": "compact fastify pino logger for better development read",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

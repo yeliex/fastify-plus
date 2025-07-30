@@ -1,6 +1,6 @@
 {
   "name": "@yeliex/fastify",
-  "version": "5.1.1",
+  "version": "5.2.0",
   "description": "a fastify encapsulation",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

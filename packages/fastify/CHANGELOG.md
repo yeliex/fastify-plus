@@ -1,5 +1,18 @@
 # @yeliex/fastify
 
+## 5.2.0
+
+### Minor Changes
+
+- 74be0bf: chore: update package export types
+
+### Patch Changes
+
+- 96bf5ec: chore: update deps
+- Updated dependencies [96bf5ec]
+- Updated dependencies [74be0bf]
+  - fastify-pino-pretty@5.2.0
+
 ## 5.1.1
 
 ### Patch Changes

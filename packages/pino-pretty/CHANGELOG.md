@@ -1,5 +1,15 @@
 # fastify-pino-pretty
 
+## 5.2.0
+
+### Minor Changes
+
+- 74be0bf: chore: update package export types
+
+### Patch Changes
+
+- 96bf5ec: chore: update deps
+
 ## 5.1.0
 
 ### Minor Changes

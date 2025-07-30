@@ -1,5 +1,11 @@
 # @yeliex/fastify
 
+## 5.2.2
+
+### Patch Changes
+
+- 62b711c: chore: update package
+
 ## 5.2.1
 
 ### Patch Changes

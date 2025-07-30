@@ -2,6 +2,7 @@
   "extends": ["@tsconfig/strictest", "@tsconfig/node16"],
   "compileOnSave": false,
   "compilerOptions": {
+    "declarationMap": true,
     "verbatimModuleSyntax": true,
     "useDefineForClassFields": true,
     "noPropertyAccessFromIndexSignature": false,

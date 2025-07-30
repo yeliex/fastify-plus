@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "composite": true,
-    "baseUrl": "./",
-    "paths": {
-      "@yeliex/fastify": ["../packages/fastify/src/index.ts"],
-      "fastify-pino-pretty": ["../packages/pino-pretty/src/index.ts"]
-    }
+    "baseUrl": "./"
   },
   "include": [],
   "references": [

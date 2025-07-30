@@ -1,4 +1,4 @@
-import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
+import { type TypeBoxTypeProvider, TypeBoxValidatorCompiler } from '@fastify/type-provider-typebox';
 import { Type } from '@sinclair/typebox';
 import createServer from '@yeliex/fastify';
 import { fileURLToPath } from 'url';
@@ -7,7 +7,7 @@ const BASE_DIR = fileURLToPath(new URL('.', import.meta.url));
 
 const server = createServer({
     baseDir: BASE_DIR,
-}).withTypeProvider<TypeBoxTypeProvider>();
+}).setValidatorCompiler(TypeBoxValidatorCompiler).withTypeProvider<TypeBoxTypeProvider>();
 
 server.listen({
     port: 3000,

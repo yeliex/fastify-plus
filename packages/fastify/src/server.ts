@@ -5,9 +5,9 @@ import type { PinoLoggerOptions } from 'fastify/types/logger.js';
 import { createWriteStream, mkdirSync } from 'fs';
 import { writeFile } from 'fs/promises';
 import defaults from 'lodash.defaults';
-import type http from 'node:http';
-import type http2 from 'node:http2';
-import type https from 'node:https';
+import type * as http from 'node:http';
+import type * as http2 from 'node:http2';
+import type * as https from 'node:https';
 import { resolve } from 'path';
 import {
     DEFAULT_LOGGER_CONFIG,

@@ -1,5 +1,12 @@
 # @yeliex/fastify
 
+## 5.2.1
+
+### Patch Changes
+
+- 9cf0776: chore: update package
+- 8b316a7: chore: update deps
+
 ## 5.2.0
 
 ### Minor Changes

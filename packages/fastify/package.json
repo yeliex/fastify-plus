@@ -3,7 +3,7 @@
   "version": "5.1.1",
   "description": "a fastify encapsulation",
   "main": "dist/index.js",
-  "typings": "src/index.ts",
+  "types": "dist/index.d.ts",
   "type": "module",
   "files": [
     "dist",

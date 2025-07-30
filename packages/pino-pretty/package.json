@@ -3,7 +3,7 @@
   "version": "5.1.0",
   "description": "compact fastify pino logger for better development read",
   "main": "dist/index.js",
-  "typings": "src/index.ts",
+  "types": "dist/index.d.ts",
   "type": "module",
   "files": [
     "dist",

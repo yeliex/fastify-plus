@@ -31,15 +31,15 @@
   "dependencies": {
     "@fastify/accepts": "^5.0.2",
     "@fastify/cookie": "^11.0.2",
-    "exception.js": "^3.0.2",
-    "fast-glob": "^3.3.2",
+    "exception.js": "^3.0.3",
+    "fast-glob": "^3.3.3",
     "fastify-pino-pretty": "workspace:*",
     "fastify-plugin": "^5.0.1",
     "lodash.defaults": "^4.2.0",
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {
-    "@types/lodash.defaults": "^4.2.0",
+    "@types/lodash.defaults": "^4.2.9",
     "@types/lodash.isplainobject": "^4.0.9"
   },
   "peerDependencies": {

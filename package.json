@@ -21,11 +21,11 @@
     "@tsconfig/node16": "^16.1.4",
     "@tsconfig/strictest": "^2.0.5",
     "@types/node": "^20.19.9",
-    "husky": "^9.0.11",
+    "husky": "^9.1.7",
     "pino": "^9.7.0",
     "pkgroll": "^2.14.5",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   },
-  "packageManager": "pnpm@10.5.2+sha512.da9dc28cd3ff40d0592188235ab25d3202add8a207afbedc682220e4a0029ffbff4562102b9e6e46b4e3f9e8bd53e6d05de48544b0c57d4b0179e22c76d1199b"
+  "packageManager": "pnpm@10.14.0-0+sha512.2cd47a0cbf5f1d1de7693a88307a0ede5be94e0d3b34853d800ee775efbea0650cb562b77605ec80bc8d925f5cd27c4dfe8bb04d3a0b76090784c664450d32d6"
 }

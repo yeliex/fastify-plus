@@ -1,5 +1,11 @@
 # fastify-pino-pretty
 
+## 5.2.1
+
+### Patch Changes
+
+- 993b3c5: fix: type composite error
+
 ## 5.2.0
 
 ### Minor Changes

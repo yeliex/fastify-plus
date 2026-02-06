@@ -1,5 +1,13 @@
 # @yeliex/fastify
 
+## 5.2.3
+
+### Patch Changes
+
+- 993b3c5: fix: type composite error
+- Updated dependencies [993b3c5]
+  - fastify-pino-pretty@5.2.1
+
 ## 5.2.2
 
 ### Patch Changes

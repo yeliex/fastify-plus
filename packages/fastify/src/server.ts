@@ -1,7 +1,6 @@
 import fastifyAccepts from '@fastify/accepts';
 import fastifyCookie from '@fastify/cookie';
 import * as fastify from 'fastify';
-import type { PinoLoggerOptions } from 'fastify/types/logger.js';
 import { createWriteStream, mkdirSync } from 'fs';
 import { writeFile } from 'fs/promises';
 import defaults from 'lodash.defaults';
@@ -32,7 +31,7 @@ interface CreateServerBaseOptions {
     defaultReplySerializer?: Parameters<fastify.FastifyInstance['setReplySerializer']>[0];
     defaultErrorHandler?: boolean | Parameters<fastify.FastifyInstance['setErrorHandler']>[0];
     defaultNotFoundHandler?: boolean | Parameters<fastify.FastifyInstance['setNotFoundHandler']>[0];
-    logger?: PinoLoggerOptions;
+    logger?: fastify.FastifyServerOptions['logger'];
     autoRegisterRoutes?: boolean | 'internal';
 }
 
@@ -86,7 +85,9 @@ function createServer<
     Logger extends fastify.FastifyBaseLogger = fastify.FastifyBaseLogger,
     TypeProvider extends fastify.FastifyTypeProvider = fastify.FastifyTypeProviderDefault,
 >(options?: CreateServerHttp2SecureOptions<Server, Logger>): fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider> & PromiseLike<fastify.FastifyInstance<Server, Request, Response, Logger, TypeProvider>>;
-function createServer(options: CreateServerBaseOptions = {}): fastify.FastifyInstance & PromiseLike<fastify.FastifyInstance> {
+function createServer(
+    options: unknown = {},
+): unknown {
     const {
         baseDir = CWD,
         workDir = CWD,
@@ -96,7 +97,7 @@ function createServer(options: CreateServerBaseOptions = {}): fastify.FastifyIns
         defaultReplySerializer: setDefaultReplySerializer,
         autoRegisterRoutes = true,
         ...extraOptions
-    } = options;
+    } = options as CreateServerBaseOptions & Record<string, unknown>;
 
     mkdirSync(runtimeDir, { recursive: true });
 
@@ -157,13 +158,16 @@ function createServer(options: CreateServerBaseOptions = {}): fastify.FastifyIns
     });
 
     const listen = app.listen;
-
-    app.listen = (async (...args: any[]) => {
+    app.listen = (async (...args: unknown[]) => {
         await app.after();
         app.register(RouterRegisterPlugin, { dir: resolve(app.baseDir, 'routes'), autoRegisterRoutes });
 
-        return (listen as any).call(app, ...args);
-    }) as any;
+        return Reflect.apply(
+            listen as unknown as (this: typeof app, ...args: unknown[]) => unknown,
+            app,
+            args,
+        );
+    }) as typeof app.listen;
 
     return app;
 }

@@ -1,5 +1,5 @@
 {
-  "extends": ["@tsconfig/strictest", "@tsconfig/node16"],
+  "extends": ["@tsconfig/strictest", "@tsconfig/node20"],
   "compileOnSave": false,
   "compilerOptions": {
     "declarationMap": true,

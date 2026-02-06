@@ -1,9 +1,9 @@
 import { gray } from 'colorette';
 import { EOL } from 'os';
-import type { LogDescriptor } from 'pino';
+import type pino from 'pino';
 import pretty, { type PrettyOptions } from 'pino-pretty';
 
-export const messageFormat = (log: LogDescriptor, messageKey: string) => {
+export const messageFormat = (log: pino.LogDescriptor, messageKey: string) => {
     const messages = [];
 
     if (!log.reqId) {

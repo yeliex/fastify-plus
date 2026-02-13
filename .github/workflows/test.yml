@@ -53,16 +53,3 @@ jobs:
 
             -   name: Test
                 run: pnpm test
-
-    release:
-        name: Trigger Release
-        needs:
-            - test
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/v4' || github.ref == 'refs/heads/v1'
-        uses: ./.github/workflows/release.yml
-        permissions:
-            contents: write
-            pull-requests: write
-            actions: write
-            id-token: write
-        secrets: inherit

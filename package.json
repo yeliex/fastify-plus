@@ -18,9 +18,9 @@
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "^2.29.8",
-    "@tsconfig/node20": "^20.1.9",
+    "@tsconfig/node24": "^24.0.4",
     "@tsconfig/strictest": "^2.0.8",
-    "@types/node": "^20.19.9",
+    "@types/node": "^24.10.13",
     "husky": "^9.1.7",
     "pino": "^10.3.0",
     "pkgroll": "^2.23.0",

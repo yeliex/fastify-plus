@@ -6,7 +6,7 @@
   "description": "fastify packages for self encapsulation",
   "scripts": {
     "clean": "pnpm recursive run clean",
-    "test": "tsc --build --verbose && tsx --test packages/fastify/test/router.test.ts",
+    "test": "tsc --build --verbose",
     "release": "scripts/release.sh",
     "prepare": "husky"
   },

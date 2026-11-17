@@ -1,5 +1,11 @@
 # @yeliex/fastify
 
+## 5.2.4
+
+### Patch Changes
+
+- 55d7b19: Convert route file paths to file URLs before importing them, fixing Windows drive-letter paths and paths containing URL special characters.
+
 ## 5.2.3
 
 ### Patch Changes

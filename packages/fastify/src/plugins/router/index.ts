@@ -1,6 +1,7 @@
 import glob from 'fast-glob';
 import type { FastifyPluginAsync } from 'fastify';
 import plugin from 'fastify-plugin';
+import { pathToFileURL } from 'node:url';
 import { resolve } from 'path';
 
 const internalRoutes = [
@@ -49,7 +50,7 @@ const RouterLoaderPlugin: FastifyPluginAsync<{
         for (const file of files) {
             fastify.log.info('register route %s', file);
 
-            const route = await import(`${resolve(BASE, file)}`);
+            const route = await import(pathToFileURL(resolve(BASE, file)).href);
 
             fastify.register(route.default, {
                 ...(route.options || {}),
